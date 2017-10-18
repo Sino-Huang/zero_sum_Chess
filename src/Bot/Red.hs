@@ -63,7 +63,7 @@ makeMove initboard lookahead= decision initboard
         decision board1 = choose $ zip (map (\x -> minValue x (-1000) 1000 (lookahead -1) ) (successor board1)) indexList
             where
                 choose :: [(Int,Int)] -> Int
-                choose [] = 2
+                choose [] = error"something wrong here"
                 choose (x:[]) = snd x
                 choose (x:xs:xss)
                     | (fst x) >= (fst xs) && (validMove board1 (snd x))= choose (x:xss)

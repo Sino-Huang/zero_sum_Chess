@@ -24,7 +24,7 @@ makeMove initboard lookahead= decision initboard
         --Max-Value function
         maxValue :: Board -> Int -> Int -> Int -> Int
         maxValue board1 alpha beta depth
-            | turn (updateBoard board1 1)== Finished = heuristicValue (updateBoard board1 1)
+            | turn board1 == Finished = heuristicValue board1
             | depth == 0 = heuristicValue board1
             | otherwise = maxfoldl (\x1 x2 -> max x1 x2) (-1000) indexList
                 where
@@ -43,7 +43,7 @@ makeMove initboard lookahead= decision initboard
         --Min-Value function
         minValue :: Board -> Int -> Int -> Int -> Int
         minValue board2 alpha beta depth
-            | turn (updateBoard board2 1)== Finished = heuristicValue (updateBoard board2 1)
+            | turn board2 == Finished = heuristicValue board2
             | depth == 0 = heuristicValue board2
             | otherwise  = minfoldl  (\m1 m2 -> min m1 m2) (1000) indexList
                 where
@@ -63,7 +63,7 @@ makeMove initboard lookahead= decision initboard
         decision board1 = choose $ zip (map (\x -> minValue x (-1000) 1000 (lookahead -1) ) (successor board1)) indexList
             where
                 choose :: [(Int,Int)] -> Int
-                choose [] = 2
+                choose [] = error"something wrong"
                 choose (x:[]) = snd x
                 choose (x:xs:xss)
                     | (fst x) >= (fst xs) && (validMove board1 (snd x))= choose (x:xss)
