@@ -79,7 +79,6 @@ makeMove initboard lookahead= decision initboard
                 map' _ [] = []
                 map' f (x:xs)
                     | turn board1 == Finished = []
-                    | turn (updateBoard board1 x) == Finished = [f x]
                     | otherwise = f x : map' f xs
 
 
