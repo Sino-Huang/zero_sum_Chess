@@ -18,7 +18,7 @@ makeMove initboard lookahead= decision initboard
         width = fst $ dimension initboard
 
         indexList :: [Int]
-        indexList = [4,3..1] ++ [5..width]
+        indexList = [1..width]
 
 
         --Max-Value function
