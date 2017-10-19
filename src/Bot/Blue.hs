@@ -22,6 +22,7 @@ makeMove initboard lookahead= decision initboard
         --alphabetapruning function -- output the heuristic value
         alphabetapruning :: Board -> Int -> Int -> Int -> Bool -> Int
         alphabetapruning bo depth alpha beta whethermax
+            | bo == initboard = (-2000)
             | depth == 0 || turn bo == Finished = heuristicValue bo
             | otherwise = case whethermax of
                 True  -> maxfoldl max (-1000) indexList
@@ -52,7 +53,7 @@ makeMove initboard lookahead= decision initboard
 
                 choose :: [(Int,Int)] -> Int
                 choose (x:xs:xss)
-                    | (fst x) >= (fst xs) && (updateBoard board1 (snd x) /= board1)= choose (x:xss)
+                    | (fst x) >= (fst xs) = choose (x:xss)
                     | otherwise = choose (xs:xss)
                 choose (x:[]) = snd x
                 choose [] = error"something wrong"

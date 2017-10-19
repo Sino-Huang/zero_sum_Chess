@@ -45,10 +45,11 @@ makeMove initboard lookahead= decision initboard
             where
 
                 choose :: [(Int,Int)] -> Int
+                choose (x:[]) = snd x
                 choose (x:xs:xss)
                     | (fst x) >= (fst xs) && (updateBoard board1 (snd x) /= board1)= choose (x:xss)
                     | otherwise = choose (xs:xss)
-                choose (x:[]) = snd x
+
                 choose [] = error"something wrong"
 
         heuristicValue :: Board -> Int -- since it is zero-sum game, the heuristicValue will be the sum of the value
