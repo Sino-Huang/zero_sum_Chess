@@ -37,6 +37,7 @@ makeMove initboard lookahead= decision initboard
                 maxfoldl _ preval [] = preval
                 maxfoldl f preval (x:xs)
                               | preval >= beta = preval
+                              | updateBoard bo x == bo = maxfoldl f preval xs
                               | otherwise = maxfoldl f (f preval
                                                                ( alphabetapruning (updateBoard bo x) (depth - 1) (max alpha preval) beta False ))
                                                                 xs
@@ -46,6 +47,7 @@ makeMove initboard lookahead= decision initboard
                 minfoldl _ preval [] = preval
                 minfoldl f preval (x:xs)
                                | preval <= alpha = preval
+                               | updateBoard bo x == bo = minfoldl f preval xs
                                | otherwise = minfoldl f
                                                             (f preval
                                                                ( alphabetapruning (updateBoard bo x) (depth - 1) alpha (min preval beta) True ))
@@ -67,7 +69,7 @@ makeMove initboard lookahead= decision initboard
 
 
         heuristicValue :: Board -> Int -- since it is zero-sum game, the heuristicValue will be the sum of the value
-        heuristicValue b = blueScore b - redScore b * 1.5
+        heuristicValue b = blueScore b - (redScore b * 2)
 
 
 
