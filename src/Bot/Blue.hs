@@ -72,8 +72,12 @@ makeMove initboard lookahead= decision initboard
         --Actions (state) -- maximizing Min-Value(Result(a,state))
         -- zip the heuristic value and the index together and then output the index with the largest heuristic value.
         decision :: Board -> Int
-        decision board1 = choose $ zip (map (\x -> alphabetapruning x lookahead (-1000) 1000 False ) (map (\x -> updateBoard board1 x) indexList )) indexList
+        decision board1 = choose $ zip (map' (\y x-> alphabetapruning x lookahead y 1000 False ) (-1000)(map (\x -> updateBoard board1 x) indexList )) indexList
             where
+                -- map' function to transfer the alpha beta function to the next node
+                map' :: (Int -> Board -> Int ) -> Int -> [Board] -> [Int]
+                map' f _ [] = []
+                map' f num (x:xs) = f num x : map' f (f num x) xs
                 -- choose function output the index number from the (minimax value, index) tuple and thus tell the makeMove function the best move
                 choose :: [(Int,Int)] -> Int
                 choose (x:xs:xss)
