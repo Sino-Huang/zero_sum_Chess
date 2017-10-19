@@ -18,7 +18,7 @@ makeMove initboard lookahead= decision initboard
         width = fst $ dimension initboard
 
         indexList :: [Int]
-        indexList = [(width `div` 2 +1), (width `div` 2) .. 1] ++ [(width `div` 2 +2) .. width]
+        indexList = [1..width]
 
 
         --alphabetapruning function -- output the heuristic value
@@ -67,7 +67,7 @@ makeMove initboard lookahead= decision initboard
 
 
         heuristicValue :: Board -> Int -- since it is zero-sum game, the heuristicValue will be the sum of the value
-        heuristicValue b = blueScore b - redScore b
+        heuristicValue b = blueScore b - redScore b * 1.5
 
 
 
